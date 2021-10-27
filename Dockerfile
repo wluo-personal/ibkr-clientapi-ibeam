@@ -2,6 +2,8 @@ FROM python:3.7.7-slim-buster
 
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
+ARG PROJECT_PATH_CLIENT="copy_cache/ibkrclient/2020Aug/clientportal.gw"
+ARG PROJECT_PATH_CHROMEDRIVER_DIR="copy_cache/chromedriver"
 
 RUN mkdir -p /usr/share/man/man1
 
@@ -65,8 +67,8 @@ RUN chown -R $USER_NAME:$GROUP_NAME $OUTPUTS_DIR
 RUN mkdir -p $IBEAM_GATEWAY_DIR
 RUN mkdir -p $IBEAM_CHROME_DRIVER_DIR
 
-COPY copy_cache/clientportal.gw $IBEAM_GATEWAY_DIR
-COPY copy_cache/chrome_driver $IBEAM_CHROME_DRIVER_DIR
+COPY $PROJECT_PATH_CLIENT $IBEAM_GATEWAY_DIR
+COPY $PROJECT_PATH_CHROMEDRIVER_DIR $IBEAM_CHROME_DRIVER_DIR
 
 RUN chown -R $USER_NAME:$GROUP_NAME $IBEAM_GATEWAY_DIR
 RUN chown -R $USER_NAME:$GROUP_NAME $IBEAM_CHROME_DRIVER_DIR
@@ -79,6 +81,11 @@ RUN echo "/opt/venv/bin/activate" >> $SRC_ROOT/activate.sh
 COPY ibeam $SRC_ROOT
 
 WORKDIR $SRC_ROOT
+RUN chmod 777 /srv/ibeam/run.sh && \
+    chmod 777 /srv/ibeam/maintain.sh && \
+    chmod 777 /srv/ibeam/authenticate.sh && \
+    chmod 777 $IBEAM_CHROME_DRIVER_PATH
+
 
 USER $USER_NAME
 
