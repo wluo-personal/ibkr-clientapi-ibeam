@@ -1,4 +1,4 @@
-FROM python:3.7.7-slim-buster
+FROM python:3.7-slim-buster
 
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
@@ -81,6 +81,7 @@ RUN echo "/opt/venv/bin/activate" >> $SRC_ROOT/activate.sh
 COPY ibeam $SRC_ROOT
 
 WORKDIR $SRC_ROOT
+# Below changing permission is neccessary since those file may initially not runnable
 RUN chmod 777 /srv/ibeam/run.sh && \
     chmod 777 /srv/ibeam/maintain.sh && \
     chmod 777 /srv/ibeam/authenticate.sh && \
