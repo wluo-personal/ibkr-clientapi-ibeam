@@ -9,11 +9,11 @@
     authDelay: 3000
     portalBaseURL: ""
     serverOptions:
-        blockedThreadCheckInterval: 10000
-        eventLoopPoolSize: 100
-        workerPoolSize: 100
+        blockedThreadCheckInterval: 1000000
+        eventLoopPoolSize: 20
+        workerPoolSize: 20
         maxWorkerExecuteTime: 100
-        internalBlockingPoolSize: 100
+        internalBlockingPoolSize: 20
     cors:
         origin.allowed: "*"
         allowCredentials: false
